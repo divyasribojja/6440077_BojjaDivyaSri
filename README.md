@@ -43,7 +43,7 @@ Key Folder:
 
 1. Clone the repo:
    ```bash
-   https://github.com/divyasribojja/6440077_BojjaDivyaSri
+   https://github.com/divyasribojja/6440077_BojjaDivyaSri.git
    ```
 Open relevant folders in your preferred IDE or code editor.
 
