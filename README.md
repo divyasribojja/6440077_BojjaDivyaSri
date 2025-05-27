@@ -42,7 +42,7 @@ Key Folder:
 📦 How to Use
 
 1. Clone the repo:
-   ```bash  https://github.com/divyasribojja/6440077_BojjaDivyaSri
+   https://github.com/divyasribojja/6440077_BojjaDivyaSri
 Open relevant folders in your preferred IDE or code editor.
 
 Use any local server (e.g., Live Server in VS Code) for HTML/CSS/JS files.
