@@ -1,0 +1,42 @@
+/* Event card styling */
+.event-card {
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 300px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Highlighted event card */
+.event-card.highlighted {
+    outline: 3px solid #e74c3c;
+    outline-offset: 5px;
+}
+
+/* Button styling */
+.register-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+/* Visibility examples */
+.hidden-element {
+    visibility: hidden;
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 10px;
+}
+
+.removed-element {
+    display: none;
+    border: 1px solid #333;
+    padding: 10px;
+    margin: 10px;
+}

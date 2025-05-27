@@ -1,0 +1,34 @@
+/* Universal selector for reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Element selector for all h2 elements */
+h2 {
+    color: #2c3e50;
+    margin: 20px 0;
+    font-size: 1.8rem;
+}
+
+/* ID selector for main header */
+#mainHeader {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Class selector for event cards */
+.eventCard {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+/* Grouping selector for h3 and p elements */
+h3, p {
+    margin-bottom: 10px;
+}

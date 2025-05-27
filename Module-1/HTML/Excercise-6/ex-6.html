@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .feedback-form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #phoneError {
+            color: red;
+            font-size: 0.8em;
+            display: none;
+        }
+        #feeDisplay {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        #charCount {
+            font-size: 0.8em;
+            color: #666;
+            text-align: right;
+        }
+        .thumbnail {
+            width: 100px;
+            cursor: pointer;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+        }
+        .enlarged {
+            width: 400px;
+            border: 3px solid #3498db;
+        }
+        #confirmation {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            border-radius: 4px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Feedback</h1>
+    
+    <div class="feedback-form">
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" placeholder="123-456-7890">
+            <div id="phoneError">Please enter a valid phone number (e.g., 123-456-7890)</div>
+        </div>
+        
+        <div class="form-group">
+            <label for="event">Select Event:</label>
+            <select id="event" name="event">
+                <option value="">-- Select an Event --</option>
+                <option value="festival" data-fee="0">Summer Festival (Free)</option>
+                <option value="concert" data-fee="25">Outdoor Concert ($25)</option>
+                <option value="workshop" data-fee="15">Cooking Workshop ($15)</option>
+            </select>
+            <div id="feeDisplay"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="feedback">Your Feedback:</label>
+            <textarea id="feedback" name="feedback" rows="4" placeholder="Share your experience..."></textarea>
+            <div id="charCount">0 characters</div>
+        </div>
+        
+        <div class="form-group">
+            <label>Event Photo:</label>
+            <img src="event-photo.jpg" alt="Event Photo" class="thumbnail" id="eventPhoto">
+        </div>
+        
+        <button id="submitBtn">Submit Feedback</button>
+        
+        <div id="confirmation">Thank you for your feedback!</div>
+    </div>
+
+    <script>
+        // Phone number validation on blur
+        document.getElementById('phone').addEventListener('blur', function() {
+            const phoneRegex = /^\d{3}-\d{3}-\d{4}$/;
+            if (!phoneRegex.test(this.value)) {
+                document.getElementById('phoneError').style.display = 'block';
+            } else {
+                document.getElementById('phoneError').style.display = 'none';
+            }
+        });
+        
+        // Display event fee on change
+        document.getElementById('event').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const fee = selectedOption.getAttribute('data-fee');
+            const feeDisplay = document.getElementById('feeDisplay');
+            
+            if (fee === "0") {
+                feeDisplay.textContent = "This is a free event!";
+            } else {
+                feeDisplay.textContent = `Event fee: $${fee}`;
+            }
+        });
+        
+        // Character count for feedback
+        document.getElementById('feedback').addEventListener('keyup', function() {
+            document.getElementById('charCount').textContent = 
+                `${this.value.length} characters`;
+        });
+        
+        // Double click to enlarge image
+        document.getElementById('eventPhoto').addEventListener('dblclick', function() {
+            this.classList.toggle('enlarged');
+        });
+        
+        // Submit button click
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            document.getElementById('confirmation').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

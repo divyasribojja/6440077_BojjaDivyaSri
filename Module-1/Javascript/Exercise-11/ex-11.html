@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="registration-form">
+    <input type="text" id="name" placeholder="Your Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <select id="event" required>
+        <option value="">Select an event</option>
+        <option value="festival">Summer Festival</option>
+        <option value="workshop">Cooking Workshop</option>
+    </select>
+    <button type="submit">Register</button>
+    <div id="error-message" style="color: red;"></div>
+</form>
+<script>
+    document.getElementById('registration-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = this.elements.name.value.trim();
+    const email = this.elements.email.value.trim();
+    const event = this.elements.event.value;
+    const errorElement = document.getElementById('error-message');
+    
+    // Validation
+    if (!name || !email || !event) {
+        errorElement.textContent = "Please fill in all fields";
+        return;
+    }
+    
+    if (!email.includes('@')) {
+        errorElement.textContent = "Please enter a valid email";
+        return;
+    }
+    
+    errorElement.textContent = "";
+    console.log(`Registration: ${name} (${email}) for ${event}`);
+    
+    // Here you would typically send data to server
+    this.reset();
+    alert("Registration successful!");
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Buggy registration function
+function buggyRegister(user) {
+    // Missing validation
+    const response = fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify(user)
+    });
+    
+    if (response.ok) {
+        console.log("Registered:", user.name);
+    } else {
+        console.log("Failed");
+    }
+}
+
+// Debugging steps:
+// 1. Add console logs
+console.log("Starting registration process");
+
+// 2. Validate inputs
+if (!user || !user.name || !user.email) {
+    console.error("Invalid user data");
+    return;
+}
+
+// 3. Properly handle fetch promise
+fetch('/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(user)
+})
+.then(response => {
+    console.log("Response status:", response.status);
+    if (!response.ok) throw new Error("Registration failed");
+    return response.json();
+})
+.then(data => {
+    console.log("Registration successful:", data);
+})
+.catch(error => {
+    console.error("Registration error:", error);
+});
+
+// 4. Use debugger statement
+// debugger;
+
+// 5. Check Network tab for request/response
+    </script>
+</body>
+</html>

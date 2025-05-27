@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Structure</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .grid-structure {
+            margin-top: 2rem;
+        }
+        .grid-structure .container {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            border-radius: 0.5rem;
+        }
+        .grid-structure .row {
+            margin-bottom: 1.5rem;
+        }
+        .grid-structure [class^="col"] {
+            padding: 1rem;
+            border: 1px solid #ced4da;
+            background-color: white;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-structure">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">First column content</div>
+                <div class="col-md-4">Second column content</div>
+                <div class="col-md-4">Third column content</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debugging Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .debug-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #output {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .success {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <h1>Debugging with Chrome DevTools</h1>
+    
+    <div class="debug-section">
+        <h2>1. Console Logging</h2>
+        <p>Use the Console tab to view logs and errors.</p>
+        <button id="logBtn">Generate Console Logs</button>
+        <button id="errorBtn">Generate Error</button>
+        <div id="consoleOutput"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>2. Breakpoints Debugging</h2>
+        <p>Set breakpoints in the Sources panel to debug this function.</p>
+        <button id="calculateBtn">Calculate Fibonacci</button>
+        <p>Fibonacci sequence at position <input type="number" id="fibInput" value="5" min="1" max="20">:</p>
+        <div id="fibOutput" class="hidden"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>3. Element Inspection</h2>
+        <p>Right-click elements and select "Inspect" to examine and modify them.</p>
+        <button id="toggleBtn">Toggle Visibility</button>
+        <div id="inspectElement" style="margin-top: 15px; padding: 15px; background-color: #e6f7ff;">
+            <p>This is an element you can inspect and modify.</p>
+            <p>Try changing its styles in the Elements panel.</p>
+        </div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>4. Network Requests</h2>
+        <p>Check the Network tab to see requests and responses.</p>
+        <button id="fetchBtn">Fetch Data</button>
+        <div id="apiOutput"></div>
+    </div>
+
+    <script>
+        // 1. Console Logging
+        document.getElementById('logBtn').addEventListener('click', function() {
+            console.log('Button clicked at:', new Date().toLocaleTimeString());
+            console.warn('This is a warning message');
+            console.info('Informational message about the action');
+            document.getElementById('consoleOutput').innerHTML = 
+                '<p class="success">Check the Console tab in DevTools to see the logs.</p>';
+        });
+        
+        document.getElementById('errorBtn').addEventListener('click', function() {
+            try {
+                // Deliberate error
+                const obj = null;
+                console.log(obj.nonExistentProperty);
+            } catch (error) {
+                console.error('Error caught:', error);
+                document.getElementById('consoleOutput').innerHTML = 
+                    '<p class="error">An error occurred. Check the Console tab for details.</p>';
+            }
+        });
+        
+        // 2. Breakpoints Debugging
+        document.getElementById('calculateBtn').addEventListener('click', function() {
+            const position = parseInt(document.getElementById('fibInput').value) || 5;
+            const result = fibonacci(position);
+            document.getElementById('fibOutput').textContent = `Result: ${result}`;
+            document.getElementById('fibOutput').classList.remove('hidden');
+        });
+        
+        function fibonacci(n) {
+            // Set breakpoint here to debug
+            if (n <= 1) return n;
+            return fibonacci(n - 1) + fibonacci(n - 2);
+        }
+        
+        // 3. Element Inspection
+        document.getElementById('toggleBtn').addEventListener('click', function() {
+            const element = document.getElementById('inspectElement');
+            if (element.style.display === 'none') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        });
+        
+        // 4. Network Requests
+        document.getElementById('fetchBtn').addEventListener('click', function() {
+            const output = document.getElementById('apiOutput');
+            output.textContent = "Fetching data from JSONPlaceholder API...";
+            
+            // This will show in the Network tab
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    output.innerHTML = `
+                        <p class="success">Data fetched successfully!</p>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        <p>Check the Network tab in DevTools to see the request details.</p>
+                    `;
+                })
+                .catch(error => {
+                    output.innerHTML = `<p class="error">Error fetching data: ${error.message}</p>`;
+                    console.error('Fetch error:', error);
+                });
+        });
+        
+       
+    </script>
+</body>
+</html>

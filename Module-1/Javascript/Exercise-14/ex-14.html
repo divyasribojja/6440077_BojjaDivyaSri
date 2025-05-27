@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .event-card { display: none; margin: 10px; padding: 10px; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <button id="registerBtn">Register</button>
+    <div id="eventContainer">
+        <div class="event-card">Summer Festival</div>
+        <div class="event-card">Winter Workshop</div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            // jQuery click handler
+            $('#registerBtn').click(function() {
+                alert('Registration button clicked!');
+            });
+            
+            // Fade in event cards
+            $('.event-card').each(function(index) {
+                $(this).delay(index * 400).fadeIn();
+            });
+            
+            // Benefit of frameworks like React/Vue:
+            // Component-based architecture makes UI more maintainable and reusable
+        });
+    </script>
+</body>
+</html>

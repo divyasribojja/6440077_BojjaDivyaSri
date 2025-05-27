@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Mock API function
+function fetchEvents() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve([
+                { id: 1, name: "Summer Festival", seats: 50 },
+                { id: 2, name: "Winter Workshop", seats: 30 }
+            ]);
+        }, 1000);
+    });
+}
+
+// Using .then() and .catch()
+function loadEventsTraditional() {
+    console.log("Loading events...");
+    fetchEvents()
+        .then(events => {
+            console.log("Events loaded:", events);
+        })
+        .catch(error => {
+            console.error("Error loading events:", error);
+        });
+}
+
+// Using async/await
+async function loadEventsModern() {
+    try {
+        console.log("Loading events...");
+        const events = await fetchEvents();
+        console.log("Events loaded:", events);
+    } catch (error) {
+        console.error("Error loading events:", error);
+    }
+}
+
+// Show loading spinner
+async function loadEventsWithUI() {
+    const spinner = document.createElement('div');
+    spinner.textContent = "Loading...";
+    document.body.appendChild(spinner);
+    
+    try {
+        const events = await fetchEvents();
+        spinner.remove();
+        console.log("Events loaded with UI:", events);
+    } catch (error) {
+        spinner.remove();
+        console.error("Error:", error);
+    }
+}
+
+// Test functions
+loadEventsTraditional();
+loadEventsModern();
+loadEventsWithUI();
+    </script>
+</body>
+</html>

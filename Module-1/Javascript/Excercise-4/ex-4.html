@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Event management functions
+function addEvent(name, date, seats, category) {
+    events.push({ name, date, seats, category });
+    console.log(`Event "${name}" added successfully.`);
+}
+
+function registerUser(eventName, userName) {
+    const event = events.find(e => e.name === eventName);
+    if (event && event.seats > 0) {
+        event.seats--;
+        console.log(`${userName} registered for ${eventName}`);
+        return true;
+    }
+    return false;
+}
+
+// Closure to track category registrations
+function createCategoryTracker() {
+    const registrations = {};
+    
+    return function(category) {
+        registrations[category] = (registrations[category] || 0) + 1;
+        console.log(`Total registrations for ${category}: ${registrations[category]}`);
+        return registrations[category];
+    };
+}
+
+// Higher-order function for filtering
+function filterEvents(callback) {
+    return events.filter(callback);
+}
+
+// Usage
+const trackRegistration = createCategoryTracker();
+
+addEvent("Art Exhibition", "2023-09-01", 30, "art");
+registerUser("Summer Festival", "Alice");
+trackRegistration("festival");
+
+const musicEvents = filterEvents(event => event.category === "music");
+const availableEvents = filterEvents(event => event.seats > 0);
+    </script>
+</body>
+</html>

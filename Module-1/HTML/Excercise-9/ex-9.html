@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Nearby Events</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #locationInfo {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            margin-top: 20px;
+            display: none;
+        }
+        #error {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        #map {
+            height: 300px;
+            width: 100%;
+            background-color: #eee;
+            margin-top: 20px;
+            display: none;
+            position: relative;
+        }
+        #map::after {
+            content: "Map would display here with your location";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+        }
+        #nearbyEvents {
+            margin-top: 20px;
+            display: none;
+        }
+        .event-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .event-item h3 {
+            margin: 0 0 5px 0;
+        }
+        .event-distance {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .loading {
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Find Events Near You</h1>
+    
+    <button id="findEventsBtn">Find Nearby Events</button>
+    <div id="error"></div>
+    
+    <div id="locationInfo">
+        <h2>Your Location</h2>
+        <p>Latitude: <span id="latitude"></span></p>
+        <p>Longitude: <span id="longitude"></span></p>
+        <p>Accuracy: <span id="accuracy"></span> meters</p>
+    </div>
+    
+    <div id="map"></div>
+    
+    <div id="nearbyEvents">
+        <h2>Events Near You</h2>
+        <div id="eventsList"></div>
+    </div>
+
+    <script>
+        document.getElementById('findEventsBtn').addEventListener('click', function() {
+            const errorElement = document.getElementById('error');
+            errorElement.textContent = '';
+            
+            // Show loading state
+            this.disabled = true;
+            this.textContent = 'Locating...';
+            
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            };
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    showPosition,
+                    showError,
+                    options
+                );
+            } else {
+                errorElement.textContent = "Geolocation is not supported by this browser.";
+                document.getElementById('findEventsBtn').disabled = false;
+                document.getElementById('findEventsBtn').textContent = 'Find Nearby Events';
+            }
+        });
+        
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+            
+            document.getElementById('latitude').textContent = latitude.toFixed(6);
+            document.getElementById('longitude').textContent = longitude.toFixed(6);
+            document.getElementById('accuracy').textContent = accuracy.toFixed(0);
+            
+            document.getElementById('locationInfo').style.display = 'block';
+            document.getElementById('map').style.display = 'block';
+            document.getElementById('findEventsBtn').disabled = false;
+            document.getElementById('findEventsBtn').textContent = 'Find Nearby Events';
+            
+            // Simulate finding nearby events
+            findNearbyEvents(latitude, longitude);
+        }
+        
+        function showError(error) {
+            const errorElement = document.getElementById('error');
+            let errorMessage = "Error getting your location: ";
+            
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = "Location access was denied. Please enable location services to find nearby events.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = "Location information is unavailable. Please check your network connection.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = "The request to get your location timed out. Please try again.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    errorMessage = "An unknown error occurred while getting your location.";
+                    break;
+            }
+            
+            errorElement.textContent = errorMessage;
+            document.getElementById('findEventsBtn').disabled = false;
+            document.getElementById('findEventsBtn').textContent = 'Find Nearby Events';
+        }
+        
+        function findNearbyEvents(lat, lng) {
+            const eventsList = document.getElementById('eventsList');
+            eventsList.innerHTML = '<p class="loading">Finding events near you...</p>';
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // In a real app, this would be an API call to your backend
+                const mockEvents = [
+                    {
+                        name: "Community Picnic",
+                        distance: "0.5 miles",
+                        location: "Central Park",
+                        time: "Sat, June 10, 12:00 PM"
+                    },
+                    {
+                        name: "Yoga in the Park",
+                        distance: "0.8 miles",
+                        location: "Riverside Park",
+                        time: "Sun, June 11, 9:00 AM"
+                    },
+                    {
+                        name: "Farmers Market",
+                        distance: "1.2 miles",
+                        location: "Main Square",
+                        time: "Every Saturday, 8:00 AM - 2:00 PM"
+                    }
+                ];
+                
+                eventsList.innerHTML = '';
+                
+                mockEvents.forEach(event => {
+                    const eventElement = document.createElement('div');
+                    eventElement.className = 'event-item';
+                    eventElement.innerHTML = `
+                        <h3>${event.name}</h3>
+                        <p>${event.location}</p>
+                        <p>${event.time}</p>
+                        <p class="event-distance">${event.distance} away</p>
+                    `;
+                    eventsList.appendChild(eventElement);
+                });
+                
+                document.getElementById('nearbyEvents').style.display = 'block';
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

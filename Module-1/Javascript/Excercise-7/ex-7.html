@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Portal</title>
+    <style>
+        .event-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        .sold-out {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>Community Events</h1>
+    <div id="events-container"></div>
+    <script>
+        const events = [
+    { name: "Summer Festival", date: "2023-07-15", seats: 50, category: "festival" },
+    { name: "Cooking Workshop", date: "2023-06-10", seats: 0, category: "workshop" },
+    { name: "Yoga Class", date: "2023-08-05", seats: 20, category: "fitness" }
+];
+
+function renderEvents() {
+    const container = document.getElementById('events-container');
+    container.innerHTML = '';
+    
+    events.forEach(event => {
+        const card = document.createElement('div');
+        card.className = `event-card ${event.seats === 0 ? 'sold-out' : ''}`;
+        
+        card.innerHTML = `
+            <h3>${event.name}</h3>
+            <p>Date: ${event.date}</p>
+            <p>Seats: ${event.seats > 0 ? event.seats : 'Sold out'}</p>
+            <button onclick="registerForEvent('${event.name}')" 
+                    ${event.seats === 0 ? 'disabled' : ''}>
+                Register
+            </button>
+        `;
+        
+        container.appendChild(card);
+    });
+}
+
+function registerForEvent(eventName) {
+    const event = events.find(e => e.name === eventName);
+    if (event && event.seats > 0) {
+        event.seats--;
+        renderEvents();
+        alert(`Successfully registered for ${eventName}`);
+    }
+}
+
+// Initial render
+document.addEventListener('DOMContentLoaded', renderEvents);
+    </script>
+</body>
+</html>

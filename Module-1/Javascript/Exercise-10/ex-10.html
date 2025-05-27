@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Default parameters
+function createEvent(name, date, seats = 50, category = "general") {
+    return { name, date, seats, category };
+}
+
+// Destructuring
+function displayEvent({ name, date, seats }) {
+    console.log(`Event: ${name} on ${date} (${seats} seats)`);
+}
+
+// Spread operator
+function cloneAndFilterEvents(category) {
+    const allEvents = [...events]; // Clone
+    return allEvents.filter(event => event.category === category);
+}
+
+// Usage
+const newEvent = createEvent("Art Show", "2023-10-15");
+displayEvent(newEvent);
+
+const { name, date } = newEvent;
+console.log(`Destructured: ${name} - ${date}`);
+
+const musicEvents = cloneAndFilterEvents("music");
+console.log("Music events:", musicEvents);
+    </script>
+</body>
+</html>

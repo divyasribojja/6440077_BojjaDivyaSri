@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const events = [
+    { name: "Summer Festival", date: "2023-07-15", seats: 50, category: "festival" },
+    { name: "Cooking Workshop", date: "2023-06-10", seats: 0, category: "workshop" },
+    { name: "Yoga Class", date: "2023-08-05", seats: 20, category: "fitness" },
+    { name: "Book Club", date: "2023-05-20", seats: 15, category: "education" }
+];
+
+// Display only upcoming events with available seats
+function displayValidEvents() {
+    const today = new Date().toISOString().split('T')[0];
+    
+    events.forEach(event => {
+        try {
+            if (event.date >= today && event.seats > 0) {
+                console.log(`${event.name} - ${event.date} (${event.seats} seats available)`);
+            }
+        } catch (error) {
+            console.error(`Error processing event ${event.name}:`, error);
+        }
+    });
+}
+
+// Register for an event with error handling
+function registerForEvent(eventName) {
+    try {
+        const event = events.find(e => e.name === eventName);
+        
+        if (!event) {
+            throw new Error("Event not found");
+        }
+        
+        if (event.seats <= 0) {
+            throw new Error("No seats available");
+        }
+        
+        event.seats--;
+        console.log(`Successfully registered for ${event.name}`);
+    } catch (error) {
+        console.error("Registration failed:", error.message);
+    }
+}
+
+displayValidEvents();
+registerForEvent("Summer Festival");
+registerForEvent("Cooking Workshop");
+    </script>
+</body>
+</html>

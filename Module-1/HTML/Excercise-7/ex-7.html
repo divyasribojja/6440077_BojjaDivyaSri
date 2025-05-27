@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Video Invite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        #videoContainer {
+            margin: 20px 0;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid #333;
+            border-radius: 5px;
+        }
+        #videoStatus {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            display: none;
+        }
+        #warningMessage {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upcoming Community Event</h1>
+    
+    <div id="videoContainer">
+        <video id="eventVideo" controls>
+            <source src="event-promo.mp4" type="video/mp4">
+            <source src="event-promo.webm" type="video/webm">
+            Your browser does not support HTML5 video.
+        </video>
+        <div id="videoStatus"></div>
+    </div>
+    
+    <p>Join us for our annual community celebration!</p>
+    
+    <form id="eventForm" style="margin-top: 30px;">
+        <label for="email">Email for updates:</label>
+        <input type="email" id="email" placeholder="your@email.com">
+        <button type="submit">Subscribe</button>
+    </form>
+    
+    <div id="warningMessage">
+        Warning: You have unsaved changes in the form!
+    </div>
+
+    <script>
+        const video = document.getElementById('eventVideo');
+        const videoStatus = document.getElementById('videoStatus');
+        const emailInput = document.getElementById('email');
+        const warningMessage = document.getElementById('warningMessage');
+        let formEdited = false;
+        
+        // Video ready to play event
+        video.addEventListener('canplay', function() {
+            videoStatus.textContent = "Video is ready to play! Click the play button.";
+            videoStatus.style.display = 'block';
+        });
+        
+        // Video playing event
+        video.addEventListener('play', function() {
+            videoStatus.textContent = "Video is now playing!";
+        });
+        
+        // Video paused event
+        video.addEventListener('pause', function() {
+            videoStatus.textContent = "Video paused.";
+        });
+        
+        // Video ended event
+        video.addEventListener('ended', function() {
+            videoStatus.textContent = "Video ended. Thanks for watching!";
+        });
+        
+        // Track form changes
+        emailInput.addEventListener('input', function() {
+            formEdited = true;
+        });
+        
+        // Warn before leaving if form is edited
+        window.addEventListener('beforeunload', function(e) {
+            if (formEdited) {
+                // Standard way to show confirmation dialog
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                warningMessage.style.display = 'block';
+                return e.returnValue;
+            }
+            
+            // Additional check if video is playing
+            if (!video.paused && !video.ended && video.currentTime > 0) {
+                const confirmationMessage = "You're currently watching our event video. Are you sure you want to leave?";
+                (e || window.event).returnValue = confirmationMessage;
+                warningMessage.textContent = "Warning: Video playback will be interrupted!";
+                warningMessage.style.display = 'block';
+                return confirmationMessage;
+            }
+        });
+        
+        // Form submission handler
+        document.getElementById('eventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (emailInput.value) {
+                alert(`Thank you for subscribing with ${emailInput.value}!`);
+                formEdited = false;
+                emailInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>

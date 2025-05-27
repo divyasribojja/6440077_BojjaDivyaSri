@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Event class definition
+class Event {
+    constructor(name, date, seats, category) {
+        this.name = name;
+        this.date = date;
+        this.seats = seats;
+        this.category = category;
+    }
+    
+    checkAvailability() {
+        return this.seats > 0;
+    }
+    
+    register() {
+        if (this.checkAvailability()) {
+            this.seats--;
+            return true;
+        }
+        return false;
+    }
+}
+
+// Create event instances
+const summerFestival = new Event("Summer Festival", "2023-07-15", 50, "festival");
+const yogaClass = new Event("Yoga Class", "2023-08-05", 20, "fitness");
+
+// Display object entries
+console.log("Event properties:");
+for (const [key, value] of Object.entries(summerFestival)) {
+    console.log(`${key}: ${value}`);
+}
+
+// Check availability
+console.log(`Is ${summerFestival.name} available?`, summerFestival.checkAvailability());
+console.log(`Registering for ${summerFestival.name}:`, summerFestival.register());
+    </script>
+</body>
+</html>

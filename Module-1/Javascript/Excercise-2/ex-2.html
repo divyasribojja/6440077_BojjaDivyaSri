@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script> 
+        // Store event details
+    const eventName = "Summer Festival";
+    const eventDate = "2023-07-15";
+    let availableSeats = 100;
+
+// Display event info using template literals
+    function displayEventInfo() {
+    console.log(`Event: ${eventName} on ${eventDate}. Seats available: ${availableSeats}`);
+}
+
+// Manage seat count
+    function registerForEvent() {
+        if (availableSeats > 0) {
+            availableSeats--;
+            console.log(`Registration successful! Remaining seats: ${availableSeats}`);
+        } else {
+            console.log("Sorry, this event is fully booked.");
+    }
+}
+
+// Test functions
+displayEventInfo();
+registerForEvent();
+displayEventInfo();
+    </script>
+</body>
+</html>

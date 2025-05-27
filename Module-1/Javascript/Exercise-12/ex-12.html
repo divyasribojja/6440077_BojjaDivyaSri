@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        async function submitRegistration(formData) {
+    const loadingIndicator = document.createElement('div');
+    loadingIndicator.textContent = "Submitting...";
+    document.body.appendChild(loadingIndicator);
+    
+    try {
+        // Simulate API call with timeout
+        const response = await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // Mock response - in real app this would be a fetch() call
+                const success = Math.random() > 0.2; // 80% success rate
+                if (success) {
+                    resolve({ ok: true, status: 201 });
+                } else {
+                    reject(new Error("Server error"));
+                }
+            }, 1500);
+        });
+        
+        loadingIndicator.remove();
+        alert("Registration submitted successfully!");
+        return response;
+    } catch (error) {
+        loadingIndicator.remove();
+        alert(`Registration failed: ${error.message}`);
+        throw error;
+    }
+}
+
+// Usage with form from Exercise 11
+document.getElementById('registration-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: this.elements.name.value,
+        email: this.elements.email.value,
+        event: this.elements.event.value
+    };
+    
+    await submitRegistration(formData);
+});
+    </script>
+</body>
+</html>

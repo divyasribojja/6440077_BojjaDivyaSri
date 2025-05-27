@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap JS Example</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .tooltip-example {
+            margin: 5rem auto;
+            width: 200px;
+            text-align: center;
+        }
+        .btn-tooltip {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="tooltip-example">
+        <button type="button" class="btn-tooltip" data-bs-toggle="tooltip" data-bs-placement="top" title="Tooltip on top">
+            Hover for tooltip
+        </button>
+    </div>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Enable tooltips
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</body>
+</html>
